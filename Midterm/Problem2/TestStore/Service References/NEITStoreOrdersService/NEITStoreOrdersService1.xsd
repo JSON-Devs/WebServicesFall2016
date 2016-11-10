@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:65207/NEITStoreOrdersService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Problem2" />
+  <xs:element name="returnAmountEarned">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="balance" type="xs:float" />
+        <xs:element minOccurs="0" name="interest" type="xs:float" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="returnAmountEarnedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="returnAmountEarnedResult" type="xs:float" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBankInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBankInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Problem2" minOccurs="0" name="getBankInformationResult" nillable="true" type="q1:Information" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
