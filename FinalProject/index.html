@@ -10,6 +10,12 @@
 		<link rel="stylesheet" href="css/style.css"/>
 	</head>
 	<body>
-		<input type="text" id="address" name="address" placeholder="Enter Address..." required/><input type="button" onclick="convertToLatLong()" value="Get Marine Forecast"/>
+		<form class="form-inline">
+			<div class="form-group">
+				<input type="text" id="address" class="form-control" name="address" placeholder="Enter Address..." required/>
+				<input type="button" class="btn btn-default" onclick="convertToLatLong()" value="Get Marine Forecast"/><p id="addressError"></p>
+			</div>
+		</form>
+		<div id="infoTables"></div>
 	</body>
 </html>

@@ -25,6 +25,7 @@ function convertToLatLong() {
 		// Set the callback function
 		xmlhttp.onreadystatechange = function () {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				$("#addressError").text("");
 				var myObj = JSON.parse(xmlhttp.responseText);
 				var name = myObj.results[0].formatted_address;
 				var lat = myObj.results[0].geometry.location.lat;
@@ -39,7 +40,7 @@ function convertToLatLong() {
 		xmlhttp.send(null);
 	}
 	else {
-		console.log("Please enter an address");
+		$("#addressError").text("Error! Please enter an address!");
 	}
 }
 
@@ -68,12 +69,22 @@ function marineCall(name, lat, lng) {
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			var myObj = JSON.parse(xmlhttp.responseText);
-			console.log("Location: " + name);
+			//Add in if statement to check if formatted_address is undefined
+			console.log(myObj);
+			var str = "";
+			str += "<h1>Location: " + name + "</h1>";
 			for(var i = 0; i < myObj.data.weather.length; i++){
-				console.log("Date: " + myObj.data.weather[i].date);
-				console.log("Sunrise: " + myObj.data.weather[i].astronomy[0].sunrise);
-				console.log("Sunset: " + myObj.data.weather[i].astronomy[0].sunset);
-				console.log("Tides");
+				str += "<h4>";
+				str += "Date: " + myObj.data.weather[i].date;
+				str += "</h4><p>";
+				str += "Sunrise: " + myObj.data.weather[i].astronomy[0].sunrise;
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+				str += "Sunset: " + myObj.data.weather[i].astronomy[0].sunset;
+				str += "</p>";
+				str += "";
+				str += "<tr><th>";
+				str += "Tides";
+				str += "<table class='table'>";
 				for(var j = 0; j < myObj.data.weather[i].tides[0].tide_data.length; j++){
 					var highOrLow = "";
 					switch (myObj.data.weather[i].tides[0].tide_data[j].tide_type ) {
@@ -86,11 +97,17 @@ function marineCall(name, lat, lng) {
 						default:
 							break;
 					}
-					console.log(highOrLow + " Tide: " + myObj.data.weather[i].tides[0].tide_data[j].tideTime);
+					console.log(myObj.data.weather[i].date);
+					console.log(j + ": " + myObj.data.weather[i].tides[0].tide_data[j].tideTime);
+					str += "<td>";
+					str += highOrLow + " Tide: " + myObj.data.weather[i].tides[0].tide_data[j].tideTime;
+					str += "</td><td>";
 					var tideHigghtMeter = myObj.data.weather[i].tides[0].tide_data[j].tideHeight_mt;
 					var tideHigghtFeet = (tideHigghtMeter * 3.28) + "";
-					console.log("Tide Height: " + tideHigghtFeet.substring(0, 4) + " ft");
+					str += "Tide Height: " + tideHigghtFeet.substring(0, 4) + " ft";
+					str += "</td>";
 				}
+				str+= "</tr></table>";
 				console.log("High: " + myObj.data.weather[i].maxtempF + " F");
 				console.log("Low: " + myObj.data.weather[i].mintempF + " F");
 				console.log("Hourly Forecast");
@@ -146,6 +163,8 @@ function marineCall(name, lat, lng) {
 				}
 				console.log(" ");
 			}
+			$("#infoTables").text("");
+			$("#infoTables").append(str);
 		} else {
 			// waiting for the call to complete
 		}
