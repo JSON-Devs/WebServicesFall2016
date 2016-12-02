@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="scripts/jquery.js"></script>
+</head>
+<body onload="myLoad()">
+	<div id="myInfo"></div>
+	<script type="text/javascript">
+		function myLoad() {
+			var url = 'http://54.84.69.209/jsonfootballservice/footballteams/getfootballteam';
+			// Cross platform xmlhttprequest
+
+			// Create xmlhttprequest object
+			var xmlhttp = null;
+			if (window.XMLHttpRequest) {
+				xmlhttp = new XMLHttpRequest();
+				//make sure that Browser supports overrideMimeType
+				if (typeof xmlhttp.overrideMimeType != 'undefined') { xmlhttp.overrideMimeType('text/xml'); }
+			} else if (window.ActiveXObject) {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} else {
+				alert('Perhaps your browser does not support xmlhttprequests?');
+			}
+
+			// Create an HTTP GET request
+			xmlhttp.open('GET', url, true);
+
+			// Set the callback function
+			xmlhttp.onreadystatechange = function () {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var myObj = JSON.parse(xmlhttp.responseText);
+					var myString = "";
+					myString += "<table><tr><th>";
+					myString += myObj.TeamName + "</th></tr>";
+					for(var i = 0; i < myObj.roster.length; i++){
+						if(myObj.roster[i].weight > 250){
+							myString += "<tr><td>" + myObj.roster[i].name + " - " + myObj.roster[i].weight + "</td></tr>";
+						}
+					}
+					myString += "</table>";
+					$("#myInfo").append(myString);
+
+				} else {
+					// waiting for the call to complete
+				}
+			};
+
+			// Make the actual request
+			xmlhttp.send(null);
+		}
+	</script>
+</body>
+</html>

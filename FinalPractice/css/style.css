@@ -1,0 +1,23 @@
+body{
+	margin:10px;
+	background-color: #3c3c3c;
+}
+
+#addressError{
+	color: red;
+	display: inline;
+	margin-left: 10px;
+}
+
+#infoTables{
+	color: #ffffff;
+	margin-top: 20px;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	border:none;
+}
+
+.table{
+	width: auto;
+}
