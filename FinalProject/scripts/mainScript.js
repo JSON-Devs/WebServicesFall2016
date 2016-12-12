@@ -70,21 +70,19 @@ function marineCall(name, lat, lng) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			var myObj = JSON.parse(xmlhttp.responseText);
 			//Add in if statement to check if formatted_address is undefined
-			console.log(myObj);
-			var str = "";
+			var str = "<div>";
 			str += "<h1>Location: " + name + "</h1>";
 			for(var i = 0; i < myObj.data.weather.length; i++){
-				str += "<h4>";
+				str += "<br/><h4>";
 				str += "Date: " + myObj.data.weather[i].date;
 				str += "</h4><p>";
 				str += "Sunrise: " + myObj.data.weather[i].astronomy[0].sunrise;
 				str += "&nbsp;&nbsp;&nbsp;&nbsp;";
 				str += "Sunset: " + myObj.data.weather[i].astronomy[0].sunset;
 				str += "</p>";
-				str += "";
-				str += "<tr><th>";
-				str += "Tides";
-				str += "<table class='table'>";
+				str += "<div>";
+				str += "<div>";
+				str += "<br/><h4>Tides</h4>";
 				for(var j = 0; j < myObj.data.weather[i].tides[0].tide_data.length; j++){
 					var highOrLow = "";
 					switch (myObj.data.weather[i].tides[0].tide_data[j].tide_type ) {
@@ -97,71 +95,91 @@ function marineCall(name, lat, lng) {
 						default:
 							break;
 					}
-					console.log(myObj.data.weather[i].date);
-					console.log(j + ": " + myObj.data.weather[i].tides[0].tide_data[j].tideTime);
-					str += "<td>";
+					str += "<p>";
+					str += myObj.data.weather[i].date;
+					str += "</p><p>";
+					str += j + ": " + myObj.data.weather[i].tides[0].tide_data[j].tideTime;
+					str += "</p><p>";
 					str += highOrLow + " Tide: " + myObj.data.weather[i].tides[0].tide_data[j].tideTime;
-					str += "</td><td>";
+					str += "</p><p>";
 					var tideHigghtMeter = myObj.data.weather[i].tides[0].tide_data[j].tideHeight_mt;
 					var tideHigghtFeet = (tideHigghtMeter * 3.28) + "";
 					str += "Tide Height: " + tideHigghtFeet.substring(0, 4) + " ft";
-					str += "</td>";
+					str += "</p>";
 				}
-				str+= "</tr></table>";
-				console.log("High: " + myObj.data.weather[i].maxtempF + " F");
-				console.log("Low: " + myObj.data.weather[i].mintempF + " F");
-				console.log("Hourly Forecast");
+				str+= "</div>";
+				str += "<div>";
+				str += "<br/><h4>Weather</h4><p>";
+				str += "High: " + myObj.data.weather[i].maxtempF + "&deg; F";
+				str += "</p><p>";
+				str += "Low: " + myObj.data.weather[i].mintempF + "&deg; F";
+				str += "</p><p>";
+				str += "Hourly Forecast";
+				str += "</p><p>";
 				for(var k = 0; k < myObj.data.weather[i].hourly.length; k++){
 					//Switch case goes here for time
 					switch (myObj.data.weather[i].hourly[k].time) {
 						case "0":
-							console.log("Time: 12:00 AM");
+							str += "Time: 12:00 AM";
 							break;
 						case "300":
-							console.log("Time: 3:00 AM");
+							str += "Time: 3:00 AM";
 							break;
 						case "600":
-							console.log("Time: 6:00 AM");
+							str += "Time: 6:00 AM";
 							break;
 						case "900":
-							console.log("Time: 9:00 AM");
+							str += "Time: 9:00 AM";
 							break;
 						case "1200":
-							console.log("Time: 12:00 PM");
+							str += "Time: 12:00 PM";
 							break;
 						case "1500":
-							console.log("Time: 3:00 PM");
+							str += "Time: 3:00 PM";
 							break;
 						case "1800":
-							console.log("Time: 6:00 PM");
+							str += "Time: 6:00 PM";
 							break;
 						case "2100":
-							console.log("Time: 9:00 PM");
+							str += "Time: 9:00 PM";
 							break;
 						default:
 							break;
 					}
-					console.log("Weather Description: " + myObj.data.weather[i].hourly[k].weatherDesc[0].value);
-					console.log("Cloud Cover: " + myObj.data.weather[i].hourly[k].cloudcover + "%");
-					var visKm = myObj.data.weather[i].hourly[k].visibility;
+					str += "</p><p>";
+					str += "Weather Description: " + myObj.data.weather[i].hourly[k].weatherDesc[0].value;
+					str += "</p><p>";
+					str += "Cloud Cover: " + myObj.data.weather[i].hourly[k].cloudcover + "%";
+					str += "</p><p>";					var visKm = myObj.data.weather[i].hourly[k].visibility;
 					var visMi = (visKm * 0.621371) + "";
-					console.log("Visibility: " + visMi.substring(0,4) + " mi");
-					console.log("Icon URL: " + myObj.data.weather[i].hourly[k].weatherIconUrl[0].value);
-					console.log("Wind Gust: " + myObj.data.weather[i].hourly[k].WindGustMiles + " mph");
-					console.log("Temperature: " + myObj.data.weather[i].hourly[k].tempF + " F");
-					console.log("Feels Like Temperature: " + myObj.data.weather[i].hourly[k].FeelsLikeF + " F");
-					console.log("Wind Chill: " + myObj.data.weather[i].hourly[k].WindChillF + " F");
-					console.log("Humidity: " + myObj.data.weather[i].hourly[k].humidity + "%");
-					console.log("Water Temperature: " + myObj.data.weather[i].hourly[k].waterTemp_F + " F");
-					console.log("Wind Speed: " + myObj.data.weather[i].hourly[k].windspeedMiles + " mph");
-					console.log("Wind Direction: " + myObj.data.weather[i].hourly[k].winddir16Point);
-					console.log("Wave Height: " + myObj.data.weather[i].hourly[k].swellHeight_ft + " ft");
+					str += "Visibility: " + visMi.substring(0,4) + " mi";
+					str += "</p><p>";
+					str += "Wind Gust: " + myObj.data.weather[i].hourly[k].WindGustMiles + " mph";
+					str += "</p><p>";
+					str += "Temperature: " + myObj.data.weather[i].hourly[k].tempF + "&deg; F";
+					str += "</p><p>";
+					str += "Feels Like Temperature: " + myObj.data.weather[i].hourly[k].FeelsLikeF + "&deg; F";
+					str += "</p><p>";
+					str += "Wind Chill: " + myObj.data.weather[i].hourly[k].WindChillF + "&deg; F";
+					str += "</p><p>";
+					str += "Humidity: " + myObj.data.weather[i].hourly[k].humidity + "%";
+					str += "</p><p>";
+					str += "Water Temperature: " + myObj.data.weather[i].hourly[k].waterTemp_F + "&deg; F";
+					str += "</p><p>";
+					str += "Wind Speed: " + myObj.data.weather[i].hourly[k].windspeedMiles + " mph";
+					str += "</p><p>";
+					str += "Wind Direction: " + myObj.data.weather[i].hourly[k].winddir16Point;
+					str += "</p><p>";
+					str += "Wave Height: " + myObj.data.weather[i].hourly[k].swellHeight_ft + " ft";
+					str += "</p><p>";
 					var sigHeightM = myObj.data.weather[i].hourly[k].sigHeight_m;
 					var sigHeightFt = (sigHeightM * 3.28) + "";
-					console.log("Significant Wave Height: " + sigHeightFt.substring(0,4) + " ft");
-					console.log("Wave Direction: " + myObj.data.weather[i].hourly[k].swellDir16Point);
+					str += "Significant Wave Height: " + sigHeightFt.substring(0,4) + " ft";
+					str += "</p><p>";
+					str += "Wave Direction: " + myObj.data.weather[i].hourly[k].swellDir16Point;
+					str += "</p>";
 				}
-				console.log(" ");
+			str+= "</div>";
 			}
 			$("#infoTables").text("");
 			$("#infoTables").append(str);
